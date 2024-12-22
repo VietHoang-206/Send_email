@@ -36,7 +36,7 @@ jobs:
           subject: Backup results
           to: hoangprobie250106@gmail.com,phamviethoang206@gmail.com
           from: Pham Viet Hoang
-          body: Build job of ${{rclone_automation}} completed seccesfully!
+          body: Build job of ${{Rclone sync}} completed seccesfully!
           
   
       
