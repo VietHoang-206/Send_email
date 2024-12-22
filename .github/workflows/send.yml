@@ -1,0 +1,42 @@
+
+name: Send email
+
+on:
+  
+  push:
+    branches: [ "main" ]
+
+
+
+  workflow_dispatch:
+
+
+jobs:
+  
+  build:
+   
+    runs-on: ubuntu-latest
+
+    
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v4
+
+      
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v4
+        with:
+
+          connection_url: ${{secrets.MAIL_CONNECTION}}
+          server_address: smtp.gmail.com
+          sever_port: 465
+          secure: true
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          subject: Backup results
+          to: hoangprobie250106@gmail.com,phamviethoang206@gmail.com
+          from: Pham Viet Hoang
+          body: Build job of ${{rclone_automation}} completed seccesfully!
+          
+  
+      
