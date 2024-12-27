@@ -12,16 +12,41 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  rclone_sync:
-    runs-on: ubuntu-latest
-  # This workflow contains a single job called "build"
- 
+  job 1:
+    rclone_sync:
+      runs-on: ubuntu-latest
+    # This workflow contains a single job called "build"
+   
+  
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
+      - name: Setup Rclone
+        uses: AnimMouse/setup-rclone@v1
+        with:
+          rclone_config: ${{ secrets.RCLONE_CONFIG }}
+        
+      - run: 'rclone sync main_viethoangprobie: backup_sinhvien:'
+  job 2:
+    send_email:
+      runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
-    - name: Setup Rclone
-      uses: AnimMouse/setup-rclone@v1
-      with:
-        rclone_config: ${{ secrets.RCLONE_CONFIG }}
+      - name: Checkout 
+        uses: actions/checkout@v4
+
       
-    - run: 'rclone sync main_viethoangprobie: backup_sinhvien:'
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v4
+        with:
+
+          connection_url: ${{secrets.MAIL_CONNECTION}}
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          subject: Backup results
+          to: hoangprobie250106@gmail.com,phamviethoang206@gmail.com
+          from: Pham Viet Hoang
+          body: Build job of ${{github.repository}} completed seccesfully!
