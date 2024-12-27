@@ -12,7 +12,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  job 1:
+  job1:
     rclone_sync:
       runs-on: ubuntu-latest
     # This workflow contains a single job called "build"
@@ -26,12 +26,10 @@ jobs:
           rclone_config: ${{ secrets.RCLONE_CONFIG }}
         
       - run: 'rclone sync main_viethoangprobie: backup_sinhvien:'
-  job 2:
-    send_email:
+  job2:
       runs-on: ubuntu-latest
-
-    
-    steps:
+      needs: job1
+      steps:
       - name: Checkout 
         uses: actions/checkout@v4
 
