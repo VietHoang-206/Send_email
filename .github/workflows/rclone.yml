@@ -4,7 +4,7 @@ on:
     - cron: '0 12 * * 1'
   workflow_dispatch:
 jobs:
-  job1:
+  rclone_sync:
     runs-on: ubuntu-latest 
     steps:
       - name: Setup Rclone
@@ -13,9 +13,9 @@ jobs:
           rclone_config: ${{ secrets.RCLONE_CONFIG }}
             
       - run: 'rclone sync main_viethoangprobie: backup_sinhvien:'
-  job2:
+  send_email:
     runs-on: ubuntu-latest
-    needs: job1
+    needs: rclone_sync
     steps:
       - name: Checkout 
         uses: actions/checkout@v4
